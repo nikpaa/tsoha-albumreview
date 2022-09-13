@@ -9,7 +9,7 @@ Application's features include:
 * The user can add a new album to the list.
 * The user can review (x/5, comments) an album.
 * The user can vote on whether a review was helpful or not.
-* The user can search for album with keywords.
+* The user can search for albums with keywords.
 * The user can edit their own reviews.
 * The admin can delete reviews if necessary.
 * The admin can edit or delete albums.
