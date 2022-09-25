@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from os import getenv
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = getenvt("DB_URL")
+app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DB_URL")
 db = SQLAlchemy(app)
 
 def get_albums(db) -> list:
