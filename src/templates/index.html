@@ -1,0 +1,17 @@
+<h1> Album reviews </h1>
+
+<p> Albums: {{ count }} </p>
+
+<table>
+{% for album in albums%}
+  <tr>
+    <td><b> {{ album.artist }} </b></td>
+    <td> {{ album.name }} </td>
+    <td> {{ album.genre }} </td>
+    <td> {{ album.year }} </td>
+    <td> {{ album.rating }} </td>
+    <td> <a href="review/{{album.id}}">review</a> </td>
+  </tr>
+{% endfor %}
+</table>
+<a href="/new-album">Add an album</a>
