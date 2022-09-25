@@ -13,3 +13,9 @@ Application's features include:
 * The user can edit their own reviews.
 * The admin can delete reviews if necessary.
 * The admin can edit or delete albums.
+
+
+Instructions:
+* You can test adding albums by clicking "add an album"
+* Once an album is added, you can review an album by clicking "review"
+The application can be found from [heroku](https://tsoha-albumreview.herokuapp.com)
