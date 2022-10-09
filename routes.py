@@ -1,5 +1,5 @@
 from app import app
-from queries import get_albums, add_album, add_review
+from queries import add_user, get_albums, add_album, add_review
 from flask import redirect, render_template, request, session
 
 def none_if_empty(x: str) -> str | None:
@@ -31,8 +31,8 @@ def login():
 @app.route("/signup",methods=["POST"])
 def signup():
     username = request.form["username"]
-    password = request:form["password"]
-
+    password = request.form["password"]
+    add_user(username, password)
     return redirect("/")
 
 @app.route("/logout")
