@@ -40,6 +40,7 @@ def signup():
 @app.route("/logout")
 def logout():
     del session["username"]
+    del session["user_id"]
     return redirect("/")
 
 @app.route("/new-album")

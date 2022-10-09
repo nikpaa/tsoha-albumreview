@@ -52,17 +52,25 @@ def get_artist_id(artist_name: None | str) -> int:
         row = result.fetchone()
     return row.id
 
-def add_album(artist: str | None, name: str | None, genre: str | None, year: str | None):
+def add_album(artist: str | None, name: str | None, genre: str | None, year: str | None) -> bool:
     artist_id = get_artist_id(artist)
 
     sql = "INSERT INTO album (artist_id, name, genre, year) VALUES (:artist_id, :name, :genre, :year)"
-    db.session.execute(sql, { "artist_id": artist_id, "name": name, "genre": genre, "year": year } )
-    db.session.commit()
+    try:
+        db.session.execute(sql, { "artist_id": artist_id, "name": name, "genre": genre, "year": year } )
+        db.session.commit()
+        return True
+    except:
+        return False
 
 
-def add_review(reviewer_id, album_id, rating, comments):
+def add_review(reviewer_id, album_id, rating, comments) -> bool:
    sql = """
         INSERT INTO review (reviewer_id, album_id, rating, comments)
         VALUES (:reviewer_id, :album_id, :rating, :comments);"""
-   db.session.execute(sql, { "reviewer_id": reviewer_id, "album_id": album_id, "rating": rating, "comments": comments } )
-   db.session.commit()
+   try:
+       db.session.execute(sql, { "reviewer_id": reviewer_id, "album_id": album_id, "rating": rating, "comments": comments } )
+       db.session.commit()
+       return True
+   except:
+       return False
