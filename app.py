@@ -2,10 +2,16 @@ from flask import Flask
 from flask import redirect, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from os import getenv
+import re
+
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
+app.config["SQLALCHEMY_DATABASE_URI"] = fix_pg_url(getenv("DATABASE_URL"))
 db = SQLAlchemy(app)
+
+# heroku provides the url in the wrong format
+def fix_postgres_url(input: str) -> str:
+    return re.sub("^postgres:", "postgresql:", input)
 
 def get_albums(db) -> list:
     result = db.session.execute("""
