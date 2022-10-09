@@ -8,9 +8,16 @@ def none_if_empty(x: str) -> str | None:
     else:
         return x
 
+
+def fix_rating_prec(albums):
+    for album in albums:
+        album.rating = f'{album.rating:.2f}'
+
+
 @app.route("/")
 def index():
     albums = get_albums()
+    fix_rating_prec(albums)
     print(albums)
     return render_template("index.html", count=len(albums), albums=albums)
 
