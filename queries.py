@@ -39,7 +39,7 @@ def get_album_name(album_id: str) -> str:
         SELECT name from album WHERE id = :album_id
     """, {"album_id": album_id})
     result.fetchone()
-    return result.name
+    return result
 
 def get_albums() -> list:
     result = db.session.execute("""
