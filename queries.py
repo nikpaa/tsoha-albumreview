@@ -30,14 +30,14 @@ def get_comments(album_id: str) -> list:
         FROM review
         INNER JOIN reviewer ON reviewer.id = review.reviewer_id
         WHERE review.album_id = :album_id
-    """)
+    """, {"album_id": album_id})
     comments = result.fetchall()
     return comments
 
-def get_album_name() -> str:
+def get_album_name(album_id: str) -> str:
     result = db.session.execute("""
         SELECT name from album WHERE album_id = :album_id
-    """)
+    """, {"album_id": album_id})
     result.fetchone()
     return result.name
 
