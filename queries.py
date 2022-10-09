@@ -20,6 +20,27 @@ def check_login(username: str, password: str) -> int | None:
             return user.id
     return None
 
+def get_comments(album_id: str) -> list:
+    result = db.session.execute("""
+        SELECT
+          review.id,
+          review.rating,
+          review.comments,
+          reviewer.name
+        FROM review
+        INNER JOIN reviewer ON reviewer.id = review.reviewer_id
+        WHERE review.album_id = :album_id
+    """)
+    comments = result.fetchall()
+    return comments
+
+def get_album_name() -> str:
+    result = db.session.execute("""
+        SELECT name from album WHERE album_id = :album_id
+    """)
+    result.fetchone()
+    return result.name
+
 def get_albums() -> list:
     result = db.session.execute("""
         SELECT

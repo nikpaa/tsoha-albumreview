@@ -1,5 +1,5 @@
 from app import app
-from queries import add_user, get_albums, add_album, add_review, check_login
+from queries import add_user, get_albums, get_comments, add_album, add_review, check_login, get_album_name
 from flask import redirect, render_template, request, session
 
 def none_if_empty(x: str) -> str | None:
@@ -57,6 +57,12 @@ def send():
     year  = none_if_empty(form["year"])
     add_album(artist, name, genre, year)
     return redirect("/")
+
+@app.route("/comments/<album_id>")
+def view_comments(album_id: str):
+    comments = get_comments(album_id)
+    album_name = get_album_name(album_id)
+    return render_template("comments.html", album_name=album_name, comments=comments)
 
 @app.route("/send-review", methods=["POST"])
 def send_review():

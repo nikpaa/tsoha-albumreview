@@ -1,0 +1,11 @@
+<p> Comments album {{ album_name }}:</p>
+
+<table>
+{% for comment in comments%}
+  <tr>
+    <td> {{ comment.comments }} </td>
+    <td> {{ comment.rating }} </td>
+    <td> {{ comment.name }} </td>
+  </tr>
+{% endfor %}
+</table>
