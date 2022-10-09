@@ -34,12 +34,14 @@ def get_comments(album_id: str) -> list:
     comments = result.fetchall()
     return comments
 
+
 def get_album_name(album_id: str) -> str:
     result = db.session.execute("""
         SELECT name from album WHERE id = :album_id
     """, {"album_id": album_id})
-    result.fetchone()
-    return result
+    album = result.fetchone()
+    return album.name
+
 
 def get_albums() -> list:
     result = db.session.execute("""
