@@ -1,11 +1,16 @@
-<p> Comments album {{ album_name }}:</p>
+<p> Comments for album {{ album_name }}:</p>
 
 <table>
+  <tr>
+    <td>user</td>
+    <td>rating</td>
+    <td>comments</td>
+  </tr>
 {% for comment in comments%}
   <tr>
-    <td> {{ comment.comments }} </td>
-    <td> {{ comment.rating }} </td>
     <td> {{ comment.name }} </td>
+    <td> {{ comment.rating }} </td>
+    <td> {{ comment.comments }} </td>
   </tr>
 {% endfor %}
 </table>
