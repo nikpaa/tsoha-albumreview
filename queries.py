@@ -36,7 +36,7 @@ def get_comments(album_id: str) -> list:
 
 def get_album_name(album_id: str) -> str:
     result = db.session.execute("""
-        SELECT name from album WHERE album_id = :album_id
+        SELECT name from album WHERE id = :album_id
     """, {"album_id": album_id})
     result.fetchone()
     return result.name
