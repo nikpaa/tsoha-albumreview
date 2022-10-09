@@ -1,11 +1,15 @@
 from db import db
 from werkzeug.security import check_password_hash, generate_password_hash
 
-def add_user(username: str, password: str):
+def add_user(username: str, password: str) -> bool:
     hash_value = generate_password_hash(password)
     sql = "INSERT INTO reviewer (name, password) VALUES (:username, :password)"
-    db.session.execute(sql, {"username":username, "password":hash_value})
-    db.session.commit()
+    try:
+        db.session.execute(sql, {"username":username, "password":hash_value})
+        db.session.commit()
+        return True
+    except:
+        return False
 
 def check_login(username: str, password: str) -> int | None:
     sql = "SELECT id, password FROM reviewer WHERE name=:username"

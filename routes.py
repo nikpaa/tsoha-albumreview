@@ -60,7 +60,7 @@ def send():
 @app.route("/send-review", methods=["POST"])
 def send_review():
     form = request.form
-    reviewer_id = none_if_empty(form["reviewer_id"])
+    reviewer_id = session["user_id"]
     album_id = none_if_empty(form["album_id"])
     rating = none_if_empty(form["rating"])
     comments = none_if_empty(form["comments"])
