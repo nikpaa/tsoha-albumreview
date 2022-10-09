@@ -23,9 +23,11 @@ def signup_form():
 def login():
     username = request.form["username"]
     password = request.form["password"]
-
-    # TODO: check username and password
-    session["username"] = username
+    user_id = check_login(username, password)
+    if user_id is not None:
+        session["username"] = username
+        session["user_id"] = user_id
+    # TODO: error that user does not exist or password is incorrect
     return redirect("/")
 
 @app.route("/signup",methods=["POST"])

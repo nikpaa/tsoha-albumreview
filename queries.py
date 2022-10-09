@@ -7,6 +7,15 @@ def add_user(username: str, password: str):
     db.session.execute(sql, {"username":username, "password":hash_value})
     db.session.commit()
 
+def check_login(username: str, password: str) -> int | None:
+    sql = "SELECT id, password FROM reviewer WHERE name=:username"
+    result = db.session.execute(sql, {"username":username})
+    user = result.fetchone()
+    if user is not None:
+        if check_password_hash(user.password, password):
+            return user.id
+    return None
+
 def get_albums() -> list:
     result = db.session.execute("""
         SELECT
