@@ -18,8 +18,6 @@ def fix_rating_prec(albums):
 @app.route("/")
 def index():
     albums = get_albums()
-    fix_rating_prec(albums)
-    print(albums)
     return render_template("index.html", count=len(albums), albums=albums)
 
 @app.route("/signup-form",methods=["GET"])
@@ -35,7 +33,6 @@ def login():
     if user_id is not None:
         session["username"] = username
         session["user_id"] = user_id
-    # TODO: error that user does not exist or password is incorrect
     return redirect("/")
 
 @app.route("/signup",methods=["POST"])
