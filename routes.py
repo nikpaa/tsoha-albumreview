@@ -1,5 +1,5 @@
 from app import app
-from queries import add_user, get_albums, add_album, add_review
+from queries import add_user, get_albums, add_album, add_review, check_login
 from flask import redirect, render_template, request, session
 
 def none_if_empty(x: str) -> str | None:
