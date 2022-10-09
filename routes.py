@@ -1,6 +1,6 @@
 from app import app
 from reviews import get_albums, add_album, add_review
-from flask import redirect, render_template, request
+from flask import redirect, render_template, request, session
 
 def none_if_empty(x: str) -> str | None:
     if len(x) == 0:
@@ -13,6 +13,19 @@ def index():
     albums = get_albums()
     print(albums)
     return render_template("index.html", count=len(albums), albums=albums)
+
+@app.route("/login",methods=["POST"])
+def login():
+    username = request.form["username"]
+    password = request.form["password"]
+    # TODO: check username and password
+    session["username"] = username
+    return redirect("/")
+
+@app.route("/logout")
+def logout():
+    del session["username"]
+    return redirect("/")
 
 @app.route("/new-album")
 def new():
