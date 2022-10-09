@@ -11,7 +11,8 @@ def none_if_empty(x: str) -> str | None:
 
 def fix_rating_prec(albums):
     for album in albums:
-        album.rating = f'{album.rating:.2f}'
+        if album.rating is not None:
+            album.rating = f'{album.rating:.2f}'
 
 
 @app.route("/")
