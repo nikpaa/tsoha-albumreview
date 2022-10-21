@@ -1,8 +1,10 @@
-<h3> Review album: </h3>
+{% extends "layout.html" %}
+{% block content %}
+<h2> Review album: </h2>
 
 <form action="/send-review" method="POST">
   <input type="hidden" id="album_id" name="album_id" value={{ album_id }}>
-  <label for="rating">Rating:</label>
+  <label for="rating"><p style="display:inline">Rating:</p></label>
   <select name="rating" id="rating">
     <option value=1>1</option>
     <option value=2>2</option>
@@ -11,7 +13,7 @@
     <option value=5>5</option>
   </select> <br>
 
-  <label for="comments">Comments:</label>
+  <label for="comments"><p style="display:inline">Comments:</p></label>
   <br>
   <textarea id="comments" name="comments"
     rows="5" cols="33">
@@ -19,3 +21,4 @@
   <br>
   <input type="submit" value="Add">
 </form>
+{% endblock %}

@@ -1,16 +1,22 @@
-<p> Comments for album {{ album_name }}:</p>
+{% extends "layout.html" %}
+{% block content %}
+<h2> Comments for album {{ album_name }}:</h2>
 
-<table>
-  <tr>
-    <td>user</td>
-    <td>rating</td>
-    <td>comments</td>
-  </tr>
+<table class="styled-table">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Rating</th>
+      <th>Comments</th>
+    <tr>
+  </thead>
 {% for comment in comments%}
-  <tr>
-    <td> {{ comment.name }} </td>
-    <td> {{ comment.rating }} </td>
-    <td> {{ comment.comments }} </td>
-  </tr>
+  <tbody>
+    <tr>
+      <td> {{ comment.name }} </td>
+      <td> {{ comment.rating }} </td>
+      <td> {{ comment.comments }} </td>
+    </tr>
+  </tbody>
 {% endfor %}
-</table>
+{% endblock %}

@@ -1,25 +1,38 @@
-<h1> Album reviews </h1>
+{% extends "layout.html" %}
+{% block content %}
 
-<p> Albums: {{ count }} </p>
+<h2> Albums: {{ count }} </h2>
 
-<table>
+<table class="styled-table">
+  <thead>
+    <tr>
+      <th>Artist</th>
+      <th>Album name</th>
+      <th>Genre</th>
+      <th>Year</th>
+      <th>Rating</th>
+      <th> </th>
+      <th> </th>
+    <tr>
+  </thead>
 {% for album in albums%}
-  <tr>
-    <td><b> {{ album.artist }} </b></td>
-    <td> {{ album.name }} </td>
-    <td> {{ album.genre }} </td>
-    <td> {{ album.year }} </td>
-    <td> {{ album.rating }} </td>
-    <td> <a href="review/{{album.id}}">review</a> </td>
-    <td> <a href="comments/{{album.id}}">view comments</a> </td>
-  </tr>
+  <tbody>
+    <tr>
+      <td> {{ album.artist }} </td>
+      <td> {{ album.name }} </td>
+      <td> {{ album.genre }} </td>
+      <td> {{ album.year }} </td>
+      <td> {{ album.rating }} </td>
+      <td> <a href="review/{{album.id}}"><button>review</button></a> </td>
+      <td> <a href="comments/{{album.id}}"><button>view comments</button></a> </td>
+    </tr>
+  </tbody>
 {% endfor %}
 </table>
-<a href="/new-album">Add an album</a>
 
 {% if session.username %}
 <p>You are logged in as {{ session.username }}</p>
-<a href="/logout">Log out</a>
+<a href="/logout"><button>Log out</button></a>
 {% else %}
 <form action="/login" method="POST">
   <p>Username:<br>
@@ -28,5 +41,5 @@
     <input type="password" name="password"></p>
   <input type="submit" value="Log in">
 </form>
-<a href="/signup-form">Create account</a>
 {% endif %}
+{% endblock %}

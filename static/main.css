@@ -1,0 +1,100 @@
+body {
+    margin-left: 230px;
+    max-width: 45em;
+    font-family: 'sans-serif';
+    background-color: #F8F8FF;
+}
+
+h1 {
+  color: #025373;
+  font-size: 25px;
+  text-align: justify;
+
+}
+
+h2 {
+  color: #025373;
+  font-size: 20px;
+  text-align: justify;
+
+}
+p {
+  color: #025373;
+  font-family: 'sans-serif';
+  font-size: 20px;
+
+}
+
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+/* td, th {
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+} */
+
+.sidebar {
+  height: 100%;
+  width: 210px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #F8F8FF;
+  overflow-x: hidden;
+  padding-top: 16px;
+  border-top: 20px solid #025373;
+}
+
+.sidebar a {
+  padding-top: 10px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #025373;
+  display: block;
+}
+
+fieldset {
+    border: 1px solid #000;
+}
+
+.button {
+  background-color: white;
+  border: none;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 30px;
+}
