@@ -51,7 +51,7 @@ def get_albums() -> list:
           album.name,
           album.genre,
           album.year,
-          AVG(review.rating) AS rating
+          ROUND(AVG(review.rating), 1) AS rating
         FROM album
         INNER JOIN artist ON artist.id = artist_id
         LEFT JOIN review ON album_id = album.id
@@ -97,3 +97,33 @@ def add_review(reviewer_id, album_id, rating, comments) -> bool:
        return True
    except:
        return False
+
+def delete_review(review_id, reviewer_id):
+    sql = """
+          DELETE FROM review WHERE id = :review_id AND reviewer_id = :reviewer_id;
+    """
+    db.session.execute(sql, { "review_id": review_id, "reviewer_id": reviewer_id } )
+    db.session.commit()
+
+def add_follower(follower_id, followee_id):
+    sql = """
+          SELECT id FROM follower
+          WHERE follower_id = :follower_id AND followee_id = :followee_id;
+    """
+    result = db.session.execute(sql, { "follower_id": follower_id, "followee_id": followee_id } )
+    if len(result.fetchall()) == 0:
+        sql = """
+              INSERT INTO follower (follower_id, followee_id) VALUES (:follower_id, :followee_id);
+        """
+        db.session.execute(sql, { "follower_id": follower_id, "followee_id": followee_id } )
+        db.session.commit()
+
+def delete_follower(follower_id, followee_id):
+    sql = """
+          DELETE FROM follower WHERE follower_id = :follower_id AND followee_id = :followee_id;
+          """
+    db.session.execute(sql, { "follower_id": follower_id, "followee_id": followee_id } )
+    db.session.commit()
+
+
+

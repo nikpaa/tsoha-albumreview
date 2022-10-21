@@ -8,11 +8,9 @@ Application's features include:
 * The user can see a list of all the albums as well as sort them by genre, release year or rating.
 * The user can add a new album to the list.
 * The user can review (x/5, comments) an album.
+* The user can filter albums.
+* The user can delete their own reviews.
 * The user can vote on whether a review was helpful or not. (TODO)
-* The user can search for albums with keywords. (TODO)
-* The user can edit their own reviews. (TODO)
-* The admin can delete reviews if necessary. (TODO)
-* The admin can edit or delete albums. (TODO)
 
 
 Instructions:
