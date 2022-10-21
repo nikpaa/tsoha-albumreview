@@ -4,11 +4,27 @@
 <div class="sidebar">
   <fieldset>
     <legend>Album Review Database</legend>
-  <a href="/"><i class="fa fa-fw fa-home"></i>Front Page</a>
-  <a href="/about"><i class="fa fa-fw fa-pencil"></i>About</a>
-  <a href="/signup-form"><i class="fa fa-fw fa-user"></i>Create an account</a>
-  <a href="/new-album"><i class="fa fa-fw fa-music"></i>Add an album</a>
+    <a href="/"><i class="fa fa-fw fa-home"></i>Front Page</a>
+    <a href="/about"><i class="fa fa-fw fa-pencil"></i>About</a>
+    {% if not session.username %}
+    <a href="/signup-form"><i class="fa fa-fw fa-user"></i>Create an account</a>
+    {% endif %}
+    <a href="/new-album"><i class="fa fa-fw fa-music"></i>Add an album</a>
+    {% if session.username %}
+    <p>You are logged in as {{ session.username }}</p>
+    <a href="/logout"><button>Log out</button></a>
+    {% else %}
+    <form action="/login" method="POST">
+      <p>Username:<br>
+        <input type="text" name="username"
+          required pattern=".+"></p>
+      <p>Password:<br>
+        <input type="password" name="password"
+          required pattern=".+"></p>
+      <input type="submit" value="Log in">
+    </form>
+    {% endif %}
 </div>
 <h1>Your favourite website for reviewing music albums</h1>
 <hr>
-{% block content %}{% endblock %}
+  {% block content %}{% endblock %}

@@ -88,15 +88,18 @@ def add_album(artist: str | None, name: str | None, genre: str | None, year: str
 
 
 def add_review(reviewer_id, album_id, rating, comments) -> bool:
-   sql = """
+    valid = [1,2,3,4,5]
+    if rating not in valid:
+        return False
+    sql = """
         INSERT INTO review (reviewer_id, album_id, rating, comments)
         VALUES (:reviewer_id, :album_id, :rating, :comments);"""
-   try:
-       db.session.execute(sql, { "reviewer_id": reviewer_id, "album_id": album_id, "rating": rating, "comments": comments } )
-       db.session.commit()
-       return True
-   except:
-       return False
+    try:
+        db.session.execute(sql, { "reviewer_id": reviewer_id, "album_id": album_id, "rating": rating, "comments": comments } )
+        db.session.commit()
+        return True
+    except:
+        return False
 
 def delete_review(review_id, reviewer_id):
     sql = """

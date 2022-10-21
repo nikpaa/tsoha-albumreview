@@ -23,23 +23,15 @@
       <td> {{ album.genre }} </td>
       <td> {{ album.year }} </td>
       <td> {{ album.rating }} </td>
+
+      {% if session.username %}
       <td> <a href="review/{{album.id}}"><button>review</button></a> </td>
+      {% endif %}
       <td> <a href="comments/{{album.id}}"><button>view comments</button></a> </td>
     </tr>
   </tbody>
 {% endfor %}
 </table>
 
-{% if session.username %}
-<p>You are logged in as {{ session.username }}</p>
-<a href="/logout"><button>Log out</button></a>
-{% else %}
-<form action="/login" method="POST">
-  <p>Username:<br>
-    <input type="text" name="username"></p>
-  <p>Password:<br>
-    <input type="password" name="password"></p>
-  <input type="submit" value="Log in">
-</form>
-{% endif %}
+
 {% endblock %}

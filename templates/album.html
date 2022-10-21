@@ -4,13 +4,13 @@
 
 <form action="/send" method="POST">
   <label for="artist"><p style="display:inline">Artist:</p></label>
-  <input type="text" id="artist" name="artist"><br>
+  <input type="text" id="artist" name="artist" required pattern=".+"></p>
   <label for="name"><p style="display:inline">Name:</p></label>
-  <input type="text" id="name" name="name"><br>
+  <input type="text" id="name" name="name" required pattern=".+"></p>
   <label for="genre"><p style="display:inline">Genre:</p></label>
-  <input type="text" id="genre" name="genre"><br>
+  <input type="text" id="genre" name="genre" required pattern=".+"></p>
   <label for="year"><p style="display:inline">Year:</p></label>
-  <input type="text" id="year" name="year"><br>
+  <input type="text" id="year" name="year" required pattern="\d{4}"></p>
 <input type="submit" value="Add">
 </form>
 {% endblock %}

@@ -98,3 +98,7 @@ fieldset {
   display: inline-block;
   font-size: 30px;
 }
+
+input:invalid {
+  border: solid 1px #FF0000;
+}

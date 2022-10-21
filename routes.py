@@ -39,6 +39,10 @@ def login():
 def signup():
     username = request.form["username"]
     password = request.form["password"]
+    if username is None or username == "":
+        return redirect("/")
+    if password is None or password == "":
+        return redirect("/")
     add_user(username, password)
     return redirect("/")
 

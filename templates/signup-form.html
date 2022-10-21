@@ -4,9 +4,11 @@
 
 <form action="/signup" method="POST">
   <label for="username"><p style="display:inline">Username:</p></label>
-  <input type="text" id="username" name="username"><br>
+  <input type="text" id="username" name="username"
+          required pattern=".+"><br>
   <label for="password"><p style="display:inline">Password:</p></label>
-  <input type="password" id="password" name="password"><br>
+  <input type="password" id="password" name="password"
+          required pattern=".+"><br>
   <input type="submit" value="Create account">
 </form>
 {% endblock %}
