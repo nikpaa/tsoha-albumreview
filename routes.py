@@ -1,14 +1,14 @@
-from app import app
 import re
 import secrets
-from queries import *
+from typing import Optional
 from flask import redirect, render_template, request, session, abort
+from queries import *
+from app import app
 
-def none_if_empty(x: str) -> str | None:
-    if len(x) == 0:
+def none_if_empty(maybe_empty: str) -> Optional[str]:
+    if len(maybe_empty) == 0:
         return None
-    else:
-        return x
+    return maybe_empty
 
 def fix_rating_prec(albums):
     for album in albums:
@@ -76,7 +76,8 @@ def send():
 def view_comments(album_id: str):
     comments = get_comments(album_id)
     album_name = get_album_name(album_id)
-    return render_template("comments.html", album_id=album_id, album_name=album_name, comments=comments)
+    return render_template("comments.html", album_id=album_id,
+                           album_name=album_name, comments=comments)
 
 @app.route("/send-review", methods=["POST"])
 def send_review():
@@ -127,7 +128,7 @@ def show_info():
 def upvote(review_id: str):
     voter_id = session["user_id"]
     check_csrf_token(request.form["csrf_token"])
-    album_id = re.findall("\d+", request.form["album_id"])[0]
+    album_id = re.findall("\\d+", request.form["album_id"])[0]
     add_vote(review_id, voter_id, True)
     return redirect(f"/comments/{album_id}")
 
@@ -135,6 +136,6 @@ def upvote(review_id: str):
 def downvote(review_id: str):
     voter_id = session["user_id"]
     check_csrf_token(request.form["csrf_token"])
-    album_id = re.findall("\d+", request.form["album_id"])[0]
+    album_id = re.findall("\\d+", request.form["album_id"])[0]
     add_vote(review_id, voter_id, False)
     return redirect(f"/comments/{album_id}")

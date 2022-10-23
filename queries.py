@@ -1,5 +1,6 @@
-from db import db
+from typing import Optional
 from werkzeug.security import check_password_hash, generate_password_hash
+from db import db
 
 def add_user(username: str, password: str) -> bool:
     hash_value = generate_password_hash(password)
@@ -11,7 +12,7 @@ def add_user(username: str, password: str) -> bool:
     except:
         return False
 
-def check_login(username: str, password: str) -> int | None:
+def check_login(username: str, password: str) -> Optional[int]:
     sql = "SELECT id, password FROM reviewer WHERE name=:username"
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()
@@ -77,7 +78,7 @@ def get_albums() -> list:
     albums = result.fetchall()
     return albums
 
-def get_artist_id(artist_name: None | str) -> int:
+def get_artist_id(artist_name: Optional[str]) -> int:
     sql_id = "SELECT id FROM artist WHERE name = :artist"
     result = db.session.execute(sql_id, { "artist": artist_name } )
     row = result.fetchone()
@@ -90,12 +91,17 @@ def get_artist_id(artist_name: None | str) -> int:
         row = result.fetchone()
     return row.id
 
-def add_album(artist: str | None, name: str | None, genre: str | None, year: str | None) -> bool:
+def add_album(artist: Optional[str], name: Optional[str],
+              genre: Optional[str], year: Optional[str]) -> bool:
     artist_id = get_artist_id(artist)
 
-    sql = "INSERT INTO album (artist_id, name, genre, year) VALUES (:artist_id, :name, :genre, :year)"
+    sql = """
+    INSERT INTO album (artist_id, name, genre, year)
+    VALUES (:artist_id, :name, :genre, :year)"
+    """
     try:
-        db.session.execute(sql, { "artist_id": artist_id, "name": name, "genre": genre, "year": year } )
+        db.session.execute(sql, { "artist_id": artist_id, "name": name,
+                                  "genre": genre, "year": year } )
         db.session.commit()
         return True
     except:
@@ -109,7 +115,10 @@ def add_review(reviewer_id, album_id, rating, comments) -> bool:
         INSERT INTO review (reviewer_id, album_id, rating, comments)
         VALUES (:reviewer_id, :album_id, :rating, :comments);"""
     try:
-        db.session.execute(sql, { "reviewer_id": reviewer_id, "album_id": album_id, "rating": rating, "comments": comments } )
+        db.session.execute(sql, { "reviewer_id": reviewer_id,
+                                  "album_id": album_id,
+                                  "rating": rating,
+                                  "comments": comments } )
         db.session.commit()
         return True
     except:
@@ -151,5 +160,6 @@ def add_vote(review_id, voter_id, is_good):
           VALUES (:review_id, :reviewer_id, :is_good);
           """
     db.session.execute(sql_del, { "review_id": review_id, "reviewer_id": voter_id } )
-    db.session.execute(sql_ins, { "review_id": review_id, "reviewer_id": voter_id, "is_good": is_good } )
+    db.session.execute(sql_ins, { "review_id": review_id, "reviewer_id": voter_id,
+                                  "is_good": is_good } )
     db.session.commit()
