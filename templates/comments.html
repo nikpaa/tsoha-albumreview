@@ -15,7 +15,7 @@
 {% for comment in comments%}
   <tbody>
     <tr>
-      <td> {{ comment.name }} </td>
+      <td> <a href="/reviewer/{{ comment.reviewer_id }}"><button>{{ comment.name }}</button></a> </td>
       <td> {{ comment.rating }} </td>
       <td> {{ comment.comments }} </td>
       <td> {% if comment.pct_helpful %} {{ comment.pct_helpful }}% {% endif %} </td>

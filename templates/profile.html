@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2> Profile: {{ profile.name }} has {{ profile.followers }} followers</h2>
+{% if session.user_id %}
+<form action="/follow/{{ profile.id }}" method="POST">
+  <input type="submit" value="follow">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+<form action="/unfollow/{{ profile.id }}" method="POST">
+  <input type="submit" value="unfollow">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+{% endif %}
+{% endblock %}

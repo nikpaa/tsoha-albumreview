@@ -19,6 +19,7 @@ def check_csrf_token(csrf_token):
     if session["csrf_token"] != csrf_token:
         abort(403)
 
+
 @app.route("/")
 def index():
     albums = get_albums()
@@ -27,7 +28,6 @@ def index():
 @app.route("/signup-form",methods=["GET"])
 def signup_form():
     return render_template("signup-form.html")
-
 
 @app.route("/login",methods=["POST"])
 def login():
@@ -96,17 +96,24 @@ def del_review(review_id: str):
     delete_review(review_id, reviewer_id)
     return redirect("/")
 
+@app.route("/reviewer/<user_id>")
+def display_profile(user_id: str):
+    profile = get_profile(user_id)
+    return render_template("profile.html", profile=profile)
+
 @app.route("/follow/<user_id>", methods=["POST"])
 def follow(user_id: str):
     follower_id = session["user_id"]
     check_csrf_token(request.form["csrf_token"])
     add_follower(follower_id, user_id)
+    return redirect(f"/reviewer/{user_id}")
 
 @app.route("/unfollow/<user_id>", methods=["POST"])
 def unfollow(user_id: str):
     follower_id = session["user_id"]
     check_csrf_token(request.form["csrf_token"])
     delete_follower(follower_id, user_id)
+    return redirect(f"/reviewer/{user_id}")
 
 @app.route("/review/<album_id>")
 def review_album(album_id: str):

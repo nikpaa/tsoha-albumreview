@@ -20,6 +20,20 @@ def check_login(username: str, password: str) -> int | None:
             return user.id
     return None
 
+def get_profile(user_id: str):
+    sql = """SELECT
+      reviewer.id,
+      reviewer.name,
+      COUNT(DISTINCT follower_id) AS followers
+    FROM reviewer
+    LEFT JOIN follower ON follower.followee_id = reviewer.id
+    WHERE reviewer.id = :user_id
+    GROUP BY reviewer.id, reviewer.name;
+    """
+    result = db.session.execute(sql, {"user_id":user_id})
+    profile = result.fetchone()
+    return profile
+
 def get_comments(album_id: str) -> list:
     result = db.session.execute("""
         SELECT
@@ -38,14 +52,12 @@ def get_comments(album_id: str) -> list:
     comments = result.fetchall()
     return comments
 
-
 def get_album_name(album_id: str) -> str:
     result = db.session.execute("""
         SELECT name from album WHERE id = :album_id
     """, {"album_id": album_id})
     album = result.fetchone()
     return album.name
-
 
 def get_albums() -> list:
     result = db.session.execute("""
@@ -64,7 +76,6 @@ def get_albums() -> list:
         """)
     albums = result.fetchall()
     return albums
-
 
 def get_artist_id(artist_name: None | str) -> int:
     sql_id = "SELECT id FROM artist WHERE name = :artist"
@@ -89,7 +100,6 @@ def add_album(artist: str | None, name: str | None, genre: str | None, year: str
         return True
     except:
         return False
-
 
 def add_review(reviewer_id, album_id, rating, comments) -> bool:
     valid = ["1","2","3","4","5"]
@@ -131,7 +141,6 @@ def delete_follower(follower_id, followee_id):
           """
     db.session.execute(sql, { "follower_id": follower_id, "followee_id": followee_id } )
     db.session.commit()
-
 
 def add_vote(review_id, voter_id, is_good):
     sql_del = """
