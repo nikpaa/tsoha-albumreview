@@ -23,15 +23,18 @@
         {% if session.user_id == comment.reviewer_id %}
         <form action="/del-review/{{ comment.id }}" method="POST">
           <input type="submit" value="delete">
+          <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         </form>
         {% elif session.user_id %}
         <form action="/upvote-review/{{ comment.id }}" method="POST">
           <input type="hidden" id="album_id" name="album_id" value={{ album_id }}>
           <input type="submit" value="upvote">
+          <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         </form>
         <form action="/downvote-review/{{ comment.id }}" method="POST">
           <input type="hidden" id="album_id" name="album_id" value={{ album_id }}>
           <input type="submit" value="downvote">
+          <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         </form>
         {% endif %} </td>
 
