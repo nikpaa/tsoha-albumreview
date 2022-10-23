@@ -97,7 +97,7 @@ def add_album(artist: Optional[str], name: Optional[str],
 
     sql = """
     INSERT INTO album (artist_id, name, genre, year)
-    VALUES (:artist_id, :name, :genre, :year)"
+    VALUES (:artist_id, :name, :genre, :year);
     """
     try:
         db.session.execute(sql, { "artist_id": artist_id, "name": name,
