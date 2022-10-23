@@ -21,7 +21,7 @@ def check_login(username: str, password: str) -> Optional[int]:
             return user.id
     return None
 
-def get_profile(user_id: str):
+def get_profile(user_id: str) -> object:
     sql = """SELECT
       reviewer.id,
       reviewer.name,
@@ -107,7 +107,7 @@ def add_album(artist: Optional[str], name: Optional[str],
     except:
         return False
 
-def add_review(reviewer_id, album_id, rating, comments) -> bool:
+def add_review(reviewer_id: str, album_id: str, rating: str, comments: str) -> bool:
     valid = ["1","2","3","4","5"]
     if rating not in valid:
         return False
@@ -124,14 +124,14 @@ def add_review(reviewer_id, album_id, rating, comments) -> bool:
     except:
         return False
 
-def delete_review(review_id, reviewer_id):
+def delete_review(review_id: str, reviewer_id: str):
     sql = """
           DELETE FROM review WHERE id = :review_id AND reviewer_id = :reviewer_id;
     """
     db.session.execute(sql, { "review_id": review_id, "reviewer_id": reviewer_id } )
     db.session.commit()
 
-def add_follower(follower_id, followee_id):
+def add_follower(follower_id: str, followee_id: str):
     sql = """
           SELECT id FROM follower
           WHERE follower_id = :follower_id AND followee_id = :followee_id;
@@ -144,14 +144,14 @@ def add_follower(follower_id, followee_id):
         db.session.execute(sql, { "follower_id": follower_id, "followee_id": followee_id } )
         db.session.commit()
 
-def delete_follower(follower_id, followee_id):
+def delete_follower(follower_id: str, followee_id: str):
     sql = """
           DELETE FROM follower WHERE follower_id = :follower_id AND followee_id = :followee_id;
           """
     db.session.execute(sql, { "follower_id": follower_id, "followee_id": followee_id } )
     db.session.commit()
 
-def add_vote(review_id, voter_id, is_good):
+def add_vote(review_id: str, voter_id: str, is_good: str):
     sql_del = """
           DELETE FROM vote WHERE review_id = :review_id AND reviewer_id = :reviewer_id;
           """

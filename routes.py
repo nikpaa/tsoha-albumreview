@@ -10,15 +10,14 @@ def none_if_empty(maybe_empty: str) -> Optional[str]:
         return None
     return maybe_empty
 
-def fix_rating_prec(albums):
+def fix_rating_prec(albums: list):
     for album in albums:
         if album.rating is not None:
             album.rating = f'{album.rating:.2f}'
 
-def check_csrf_token(csrf_token):
+def check_csrf_token(csrf_token: str):
     if session["csrf_token"] != csrf_token:
         abort(403)
-
 
 @app.route("/")
 def index():

@@ -57,12 +57,6 @@ p {
     border-bottom: 2px solid #009879;
 }
 
-/* td, th {
-    border-style: solid;
-    border-color: black;
-    border-width: 1px;
-} */
-
 .sidebar {
   height: 100%;
   width: 210px;
