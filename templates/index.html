@@ -25,9 +25,9 @@
       <td> {{ album.rating }} </td>
 
       {% if session.username %}
-      <td> <a href="review/{{album.id}}"><button>review</button></a> </td>
+      <td> <a href="review/{{ album.id }}"><button>review</button></a> </td>
       {% endif %}
-      <td> <a href="comments/{{album.id}}"><button>view comments</button></a> </td>
+      <td> <a href="comments/{{ album.id }}"><button>view comments</button></a> </td>
     </tr>
   </tbody>
 {% endfor %}

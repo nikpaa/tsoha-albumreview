@@ -26,10 +26,14 @@ def get_comments(album_id: str) -> list:
           review.id,
           review.rating,
           review.comments,
-          reviewer.name
+          reviewer.name,
+          reviewer.id AS reviewer_id,
+          ROUND(AVG(is_good::int::real)*100) AS pct_helpful
         FROM review
         INNER JOIN reviewer ON reviewer.id = review.reviewer_id
+        LEFT JOIN vote ON review.id = vote.review_id
         WHERE review.album_id = :album_id
+        GROUP BY review.id, review.rating, review.comments, reviewer.name, reviewer.id
     """, {"album_id": album_id})
     comments = result.fetchall()
     return comments
@@ -88,7 +92,7 @@ def add_album(artist: str | None, name: str | None, genre: str | None, year: str
 
 
 def add_review(reviewer_id, album_id, rating, comments) -> bool:
-    valid = [1,2,3,4,5]
+    valid = ["1","2","3","4","5"]
     if rating not in valid:
         return False
     sql = """
@@ -129,4 +133,14 @@ def delete_follower(follower_id, followee_id):
     db.session.commit()
 
 
-
+def add_vote(review_id, voter_id, is_good):
+    sql_del = """
+          DELETE FROM vote WHERE review_id = :review_id AND reviewer_id = :reviewer_id;
+          """
+    sql_ins = """
+          INSERT INTO vote (review_id, reviewer_id, is_good)
+          VALUES (:review_id, :reviewer_id, :is_good);
+          """
+    db.session.execute(sql_del, { "review_id": review_id, "reviewer_id": voter_id } )
+    db.session.execute(sql_ins, { "review_id": review_id, "reviewer_id": voter_id, "is_good": is_good } )
+    db.session.commit()

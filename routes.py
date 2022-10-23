@@ -1,5 +1,6 @@
 from app import app
-from queries import add_user, get_albums, get_comments, add_album, add_review, check_login, get_album_name, delete_review, add_follower, delete_follower
+import re
+from queries import add_user, get_albums, get_comments, add_album, add_review, check_login, get_album_name, delete_review, add_follower, delete_follower, add_vote
 from flask import redirect, render_template, request, session
 
 def none_if_empty(x: str) -> str | None:
@@ -59,7 +60,6 @@ def new():
 @app.route("/send", methods=["POST"])
 def send():
     form = request.form
-    print(form)
     artist = none_if_empty(form["artist"])
     name = none_if_empty(form["name"])
     genre = none_if_empty(form["genre"])
@@ -71,7 +71,7 @@ def send():
 def view_comments(album_id: str):
     comments = get_comments(album_id)
     album_name = get_album_name(album_id)
-    return render_template("comments.html", album_name=album_name, comments=comments)
+    return render_template("comments.html", album_id=album_id, album_name=album_name, comments=comments)
 
 @app.route("/send-review", methods=["POST"])
 def send_review():
@@ -107,3 +107,16 @@ def review_album(album_id: str):
 def show_info():
     return render_template("about.html")
 
+@app.route("/upvote-review/<review_id>", methods=["POST"])
+def upvote(review_id: str):
+    voter_id = session["user_id"]
+    album_id = re.findall("\d+", request.form["album_id"])[0]
+    add_vote(review_id, voter_id, True)
+    return redirect(f"/comments/{album_id}")
+
+@app.route("/downvote-review/<review_id>", methods=["POST"])
+def downvote(review_id: str):
+    voter_id = session["user_id"]
+    album_id = re.findall("\d+", request.form["album_id"])[0]
+    add_vote(review_id, voter_id, False)
+    return redirect(f"/comments/{album_id}")

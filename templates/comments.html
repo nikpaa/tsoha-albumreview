@@ -8,6 +8,8 @@
       <th>User</th>
       <th>Rating</th>
       <th>Comments</th>
+      <th>How many users found this helpful?</th>
+      <th></th>
     <tr>
   </thead>
 {% for comment in comments%}
@@ -16,6 +18,23 @@
       <td> {{ comment.name }} </td>
       <td> {{ comment.rating }} </td>
       <td> {{ comment.comments }} </td>
+      <td> {% if comment.pct_helpful %} {{ comment.pct_helpful }}% {% endif %} </td>
+      <td>
+        {% if session.user_id == comment.reviewer_id %}
+        <form action="/del-review/{{ comment.id }}" method="POST">
+          <input type="submit" value="delete">
+        </form>
+        {% elif session.user_id %}
+        <form action="/upvote-review/{{ comment.id }}" method="POST">
+          <input type="hidden" id="album_id" name="album_id" value={{ album_id }}>
+          <input type="submit" value="upvote">
+        </form>
+        <form action="/downvote-review/{{ comment.id }}" method="POST">
+          <input type="hidden" id="album_id" name="album_id" value={{ album_id }}>
+          <input type="submit" value="downvote">
+        </form>
+        {% endif %} </td>
+
     </tr>
   </tbody>
 {% endfor %}
